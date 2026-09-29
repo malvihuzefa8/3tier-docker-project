@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: malvi  # replace with your MySQL root password
+      MYSQL_DATABASE: cricket_db
+    volumes:
+      - mydb_data:/var/lib/mysql
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: malvi  # replace with your MySQL root password
+
+volumes:
+  mydb_data:
+
